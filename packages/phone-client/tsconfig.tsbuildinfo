@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/game/gameengine.ts","./src/game/mazes.ts","./src/game/sfx.ts","./src/pages/gamepage.tsx","./src/pages/joinpage.tsx","./src/pages/waitingpage.tsx","./src/render/mazerenderer.ts","./src/socket/usegamesocket.ts"],"version":"5.9.3"}

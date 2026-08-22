@@ -1,0 +1,177 @@
+/* ============================================================
+   MAZE RUSH — "The Enchanted Maze"
+   8-bit / pixel-art wizarding-academy design system (phone)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  /* -- castle palette -- */
+  --bg: #0b0917;              /* deep midnight navy */
+  --bg-2: #14112a;            /* stone-shadow gradient stop */
+  --panel: #1e1a33;           /* dark stone panel */
+  --panel-2: #2a2547;         /* lighter stone (raised) */
+  --stone-line: #423a63;      /* mortar / border line */
+  --ink: #f2e6c9;             /* warm parchment text */
+  --dim: #a89bd0;             /* muted lavender-grey */
+
+  /* re-mapped accent roles (kept names for drop-in compatibility) */
+  --purple: #e0b64a;          /* antique gold — primary accent */
+  --purple-light: #f5d888;    /* bright gold — hover/glow */
+  --pink: #b23a52;            /* deep crimson — score / danger */
+  --green: #2f8f5b;           /* emerald — success / level 1 */
+  --orange: #e0813a;          /* candle orange — warning / level 2 */
+  --line: #423a63;
+
+  --gold: #e0b64a;
+  --gold-bright: #f5d888;
+  --crimson: #b23a52;
+  --emerald: #2f8f5b;
+  --royal-blue: #3d5ba0;
+  --candle: #e0813a;
+  --parchment: #f2e6c9;
+
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-retro: 'VT323', monospace;
+}
+
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html, body, #root { height: 100%; margin: 0; }
+
+body {
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(224,182,74,0.10), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  color: var(--ink);
+  font-family: var(--font-retro);
+  font-size: 19px;
+  overflow: hidden;
+  user-select: none;
+  image-rendering: pixelated;
+}
+
+h1, h2, h3, .pixel-heading {
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+  line-height: 1.5;
+}
+
+button { cursor: pointer; font-family: inherit; }
+input { font-family: inherit; }
+
+/* subtle CRT-ish pixel vignette used behind full-screen pages */
+.castle-bg {
+  position: relative;
+  background:
+    radial-gradient(circle at 20% 15%, rgba(245,216,136,0.14), transparent 40%),
+    radial-gradient(circle at 80% 10%, rgba(61,91,160,0.12), transparent 45%),
+    linear-gradient(180deg, #0b0917 0%, #171331 55%, #0b0917 100%);
+}
+.castle-bg::before {
+  /* starfield */
+  content: "";
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(1.5px 1.5px at 10% 20%, #f5d888 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 80% 15%, #f2e6c9 40%, transparent 41%),
+    radial-gradient(1px 1px at 60% 10%, #f5d888 40%, transparent 41%),
+    radial-gradient(1px 1px at 30% 35%, #f2e6c9 40%, transparent 41%),
+    radial-gradient(1.5px 1.5px at 90% 40%, #f5d888 40%, transparent 41%),
+    radial-gradient(1px 1px at 45% 8%, #f2e6c9 40%, transparent 41%);
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+/* ---- pixel "stone/wood plaque" button ---- */
+.pixel-btn {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: var(--ink);
+  background: var(--panel-2);
+  border: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 16px 14px;
+  box-shadow:
+    inset 0 0 0 2px rgba(0,0,0,0.35),
+    0 5px 0 #12101f,
+    0 5px 0 2px rgba(0,0,0,0.4);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+}
+.pixel-btn:active {
+  transform: translateY(4px);
+  box-shadow: inset 0 0 0 2px rgba(0,0,0,0.35), 0 1px 0 #12101f, 0 1px 0 2px rgba(0,0,0,0.4);
+}
+.pixel-btn:disabled { opacity: 0.6; }
+.pixel-btn.primary {
+  background: linear-gradient(180deg, #f0c95f, #d4a13b);
+  color: #1a1330;
+  border-color: #7a5a1e;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25), 0 5px 0 #7a5a1e, 0 5px 0 2px rgba(0,0,0,0.35);
+}
+.pixel-btn.primary:active {
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,0.25), 0 1px 0 #7a5a1e, 0 1px 0 2px rgba(0,0,0,0.35);
+}
+
+/* parchment input */
+.parchment-input {
+  font-family: var(--font-retro);
+  font-size: 20px;
+  background: var(--parchment);
+  color: #2a1f10;
+  border: 3px solid var(--gold);
+  border-radius: 4px;
+  padding: 14px;
+  text-align: center;
+  box-shadow: inset 0 2px 6px rgba(0,0,0,0.25), 0 3px 0 #7a5a1e;
+}
+.parchment-input::placeholder { color: #8a7550; }
+
+/* stone card panel */
+.stone-panel {
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 2px solid var(--stone-line);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(224,182,74,0.15), 0 4px 10px rgba(0,0,0,0.4);
+}
+
+@keyframes sparklePulse {
+  0%, 100% { text-shadow: 0 0 5px rgba(240,201,95,0.4), 0 0 1px rgba(255,255,255,0.2); }
+  50% { text-shadow: 0 0 11px rgba(240,201,95,0.65), 0 0 3px rgba(255,255,255,0.35); }
+}
+.glow-gold { animation: sparklePulse 3.6s ease-in-out infinite; }
+.text-glow-soft { text-shadow: 0 0 6px rgba(240,201,95,0.3); }
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-90px) translateX(var(--drift, 10px)); opacity: 0; }
+}
+.magic-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 6px 1px rgba(245,216,136,0.7);
+  animation: floatParticle linear infinite;
+  pointer-events: none;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.twinkle-star { animation: twinkle ease-in-out infinite; }
+
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 55%, 57%, 100% { opacity: 1; }
+  20%, 22%, 56% { opacity: 0.55; }
+}
+.torch { animation: flicker 3.2s infinite; }
+
+@keyframes cardPopIn {
+  0% { opacity: 0; transform: scale(0.85) translateY(10px); }
+  60% { opacity: 1; transform: scale(1.03) translateY(0); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+.end-card-pop { animation: cardPopIn 0.45s cubic-bezier(0.2, 0.8, 0.3, 1.1); text-align: center; }
