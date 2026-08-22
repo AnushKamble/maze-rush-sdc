@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
 
 :root {
+  color-scheme: dark;
   --bg: #0b0917;
   --bg-2: #14112a;
   --panel: #1e1a33;
@@ -35,6 +36,7 @@
 * { box-sizing: border-box; }
 html, body, #root { height: 100%; margin: 0; }
 body {
+  background-color: var(--bg);
   background:
     radial-gradient(ellipse at 50% -10%, rgba(224,182,74,0.08), transparent 55%),
     linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
