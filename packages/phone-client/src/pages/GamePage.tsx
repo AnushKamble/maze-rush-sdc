@@ -403,10 +403,10 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
       tracking = false;
     }
 
-    el.addEventListener("touchstart", onStart, { passive: true });
+    el.addEventListener("touchstart", onStart, { passive: false });
     el.addEventListener("touchmove", onMove, { passive: false });
-    el.addEventListener("touchend", onEnd, { passive: true });
-    el.addEventListener("touchcancel", onCancel, { passive: true });
+    el.addEventListener("touchend", onEnd, { passive: false });
+    el.addEventListener("touchcancel", onCancel, { passive: false });
     return () => {
       el.removeEventListener("touchstart", onStart);
       el.removeEventListener("touchmove", onMove);
@@ -446,7 +446,18 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
     <div
       ref={wrapperRef}
       className="castle-bg"
-      style={{ display: "flex", flexDirection: "column", height: "100%", padding: 12, gap: 8, position: "relative", overflow: "hidden" }}
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        height: "100%",
+        padding: 12,
+        gap: 8,
+        position: "relative",
+        overflow: "hidden",
+        touchAction: "none",
+        userSelect: "none",
+        WebkitUserSelect: "none"
+      }}
     >
       {/* HUD */}
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 6 }}>
