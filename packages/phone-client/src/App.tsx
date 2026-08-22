@@ -26,5 +26,5 @@ export default function App() {
     return <WaitingPage team={team} />;
   }
 
-  return <GamePage playerName={self.name} team={team} onProgress={reportProgress} />;
+  return <GamePage playerName={self.name} team={team} onProgress={reportProgress} serverPhase={phase} />;
 }

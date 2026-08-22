@@ -18,9 +18,10 @@ interface Props {
   playerName: string;
   team: TeamInfo | null;
   onProgress: (score: number, level: number, lives: number, gameOver?: boolean) => void;
+  serverPhase?: string;
 }
 
-export default function GamePage({ playerName, team, onProgress }: Props) {
+export default function GamePage({ playerName, team, onProgress, serverPhase }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<GameEngine | null>(null);
@@ -543,14 +544,15 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
       </div>
 
       {/* canvas */}
-      <div style={{ display: "flex", justifyContent: "center", flex: 1, alignItems: "center", minHeight: 0 }}>
+      <div style={{ display: "flex", justifyContent: "center", flex: 1, alignItems: "center", minHeight: 0, overflow: "hidden", width: "100%" }}>
         <canvas
           ref={canvasRef}
           style={{
-            width: "auto",
+            width: "100%",
             height: "100%",
             maxWidth: "100%",
             maxHeight: "100%",
+            objectFit: "contain",
             aspectRatio: `${snap.gridWidth} / ${snap.gridHeight}`,
             borderRadius: 6,
             border: "3px solid var(--gold)",
@@ -584,6 +586,19 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
             {LEVELS[snap.levelIndex + 1]?.name ?? "the final trial"}
           </div>
           <div style={{ fontSize: "clamp(13px, 3vw, 15px)", color: "var(--dim)", marginTop: 12 }}>tap to continue</div>
+        </Overlay>
+      )}
+
+      {/* server ended game card for players still alive */}
+      {serverPhase === "ended" && snap.phase !== "gameOver" && snap.phase !== "victory" && (
+        <Overlay solid>
+          <HogwartsHonorCard
+            score={snap.score}
+            highestLevel={engineRef.current?.highestLevelReached ?? snap.levelDef.level}
+            lives={snap.lives}
+            team={team}
+            playerName={playerName}
+          />
         </Overlay>
       )}
 
@@ -627,6 +642,12 @@ function EndGameCard({
     ["House", team ? `${team.icon} ${team.name}` : "—"],
   ];
 
+  const redirectToLeaderboard = () => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    window.location.href = `${protocol}//${hostname}:5173`;
+  };
+
   return (
     <div
       className="stone-panel end-card-pop"
@@ -665,6 +686,91 @@ function EndGameCard({
       <div style={{ fontSize: "clamp(13px, 3vw, 14.5px)", color: "var(--dim)", marginTop: 18, lineHeight: 1.5 }}>
         Your score has joined {team?.name ?? "your house"}'s total on the great hall board.
       </div>
+
+      <button
+        onClick={redirectToLeaderboard}
+        className="pixel-btn primary"
+        style={{ marginTop: 20, width: "100%", fontSize: 11, padding: "12px 10px" }}
+      >
+        Go to Leaderboard
+      </button>
+    </div>
+  );
+}
+
+function HogwartsHonorCard({
+  score,
+  highestLevel,
+  lives,
+  team,
+  playerName,
+}: {
+  score: number;
+  highestLevel: number;
+  lives: number;
+  team: TeamInfo | null;
+  playerName: string;
+}) {
+  const levelName = LEVELS[Math.min(highestLevel, LEVELS.length) - 1]?.name ?? LEVELS[0].name;
+  const rows: Array<[string, string]> = [
+    ["Final Score", score.toLocaleString()],
+    ["Highest Level", `${highestLevel}/10 · ${levelName}`],
+    ["Lives Saved", `${lives} 🔮`],
+    ["House", team ? `${team.icon} ${team.name}` : "—"],
+  ];
+
+  const redirectToLeaderboard = () => {
+    const protocol = window.location.protocol;
+    const hostname = window.location.hostname;
+    window.location.href = `${protocol}//${hostname}:5173`;
+  };
+
+  return (
+    <div
+      className="stone-panel end-card-pop"
+      style={{
+        width: "100%",
+        maxWidth: 340,
+        padding: "26px 22px",
+        borderColor: "var(--gold)",
+        boxShadow: `0 0 0 1px rgba(224,182,74,0.15), 0 0 26px rgba(224,182,74,0.35), 0 8px 22px rgba(0,0,0,0.5)`,
+      }}
+    >
+      <div style={{ fontSize: 44, marginBottom: 8 }} className="glow-gold">📜</div>
+      <h1
+        className="pixel-heading glow-gold"
+        style={{ fontSize: "clamp(16px, 4.4vw, 19px)", color: "var(--gold)", margin: "6px 0 4px", lineHeight: 1.6 }}
+      >
+        Trial Accomplished
+      </h1>
+      <div style={{ fontSize: "clamp(15px, 3.6vw, 17px)", color: "var(--dim)", marginBottom: 18 }}>{playerName}'s parchment is sealed</div>
+
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
+        <tbody>
+          {rows.map(([label, value]) => (
+            <tr key={label} style={{ borderTop: "1px solid var(--stone-line)" }}>
+              <td style={{ padding: "10px 4px", textAlign: "left", fontSize: "clamp(13px, 3.2vw, 14.5px)", color: "var(--dim)", letterSpacing: 0.5, fontFamily: "var(--font-pixel)", verticalAlign: "middle" }}>
+                {label}
+              </td>
+              <td style={{ padding: "10px 4px", textAlign: "right", fontSize: "clamp(16px, 4vw, 18px)", color: "var(--gold)", fontWeight: 700, verticalAlign: "middle" }}>
+                {value}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      <div style={{ fontSize: "clamp(13px, 3vw, 14.5px)", color: "var(--dim)", marginTop: 18, lineHeight: 1.5 }}>
+        Your magic has contributed to {team?.name ?? "your house"}'s final standing.
+      </div>
+
+      <button
+        onClick={redirectToLeaderboard}
+        className="pixel-btn primary"
+        style={{ marginTop: 20, width: "100%", fontSize: 11, padding: "12px 10px" }}
+      >
+        Go to Leaderboard
+      </button>
     </div>
   );
 }
