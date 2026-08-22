@@ -354,64 +354,113 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // ---- swipe input (non-passive so we can block page scroll during a swipe) ----
+  // ---- swipe input (captured globally to prevent page scrolls and selection) ----
   useEffect(() => {
-    const el = wrapperRef.current;
-    if (!el) return undefined;
     let startX = 0;
     let startY = 0;
     let tracking = false;
 
-    function onStart(e: TouchEvent) {
-      if (e.touches.length !== 1) return;
+    function handleStart(clientX: number, clientY: number) {
       tracking = true;
-      startX = e.touches[0].clientX;
-      startY = e.touches[0].clientY;
+      startX = clientX;
+      startY = clientY;
     }
-    function onMove(e: TouchEvent) {
+
+    function handleMove(clientX: number, clientY: number, preventDefaultFn?: () => void) {
       if (!tracking) return;
-      e.preventDefault();
-      
-      const currentX = e.touches[0].clientX;
-      const currentY = e.touches[0].clientY;
-      const dx = currentX - startX;
-      const dy = currentY - startY;
+      if (preventDefaultFn) preventDefaultFn();
+
+      const dx = clientX - startX;
+      const dy = clientY - startY;
       const adx = Math.abs(dx);
       const ady = Math.abs(dy);
-      
+
       if (Math.max(adx, ady) >= SWIPE_MIN_DISTANCE) {
         const dir: Exclude<Dir, null> = adx > ady ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U");
         engineRef.current?.setDesiredDirection(dir);
         // Reset start coordinates to current position to support continuous dragging/swiping
-        startX = currentX;
-        startY = currentY;
+        startX = clientX;
+        startY = clientY;
       }
     }
-    function onEnd(e: TouchEvent) {
+
+    function handleEnd(clientX: number, clientY: number) {
       if (!tracking) return;
       tracking = false;
-      const t = e.changedTouches[0];
-      const dx = t.clientX - startX;
-      const dy = t.clientY - startY;
+      const dx = clientX - startX;
+      const dy = clientY - startY;
       const adx = Math.abs(dx);
       const ady = Math.abs(dy);
       if (Math.max(adx, ady) < SWIPE_MIN_DISTANCE) return;
       const dir: Exclude<Dir, null> = adx > ady ? (dx > 0 ? "R" : "L") : dy > 0 ? "D" : "U";
       engineRef.current?.setDesiredDirection(dir);
     }
-    function onCancel() {
+
+    // Touch Event Handlers
+    function onTouchStart(e: TouchEvent) {
+      const touch = e.touches[0] || e.changedTouches[0];
+      if (touch) {
+        handleStart(touch.clientX, touch.clientY);
+      }
+    }
+
+    function onTouchMove(e: TouchEvent) {
+      const touch = e.touches[0] || e.changedTouches[0];
+      if (touch) {
+        handleMove(touch.clientX, touch.clientY, () => {
+          if (e.cancelable) e.preventDefault();
+        });
+      }
+    }
+
+    onTouchMove.passive = false;
+
+    function onTouchEnd(e: TouchEvent) {
+      const touch = e.changedTouches[0] || e.touches[0];
+      if (touch) {
+        handleEnd(touch.clientX, touch.clientY);
+      }
+    }
+
+    function onTouchCancel() {
       tracking = false;
     }
 
-    el.addEventListener("touchstart", onStart, { passive: false });
-    el.addEventListener("touchmove", onMove, { passive: false });
-    el.addEventListener("touchend", onEnd, { passive: false });
-    el.addEventListener("touchcancel", onCancel, { passive: false });
+    // Mouse Event Handlers for desktop dragging testing
+    function onMouseDown(e: MouseEvent) {
+      if (e.button === 0) {
+        handleStart(e.clientX, e.clientY);
+      }
+    }
+
+    function onMouseMove(e: MouseEvent) {
+      handleMove(e.clientX, e.clientY, () => {
+        if (tracking && e.cancelable) e.preventDefault();
+      });
+    }
+
+    function onMouseUp(e: MouseEvent) {
+      handleEnd(e.clientX, e.clientY);
+    }
+
+    window.addEventListener("touchstart", onTouchStart, { passive: false });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("touchend", onTouchEnd, { passive: false });
+    window.addEventListener("touchcancel", onTouchCancel, { passive: false });
+
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mousemove", onMouseMove, { passive: false });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
+
     return () => {
-      el.removeEventListener("touchstart", onStart);
-      el.removeEventListener("touchmove", onMove);
-      el.removeEventListener("touchend", onEnd);
-      el.removeEventListener("touchcancel", onCancel);
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+      window.removeEventListener("touchcancel", onTouchCancel);
+
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
     };
   }, []);
 
