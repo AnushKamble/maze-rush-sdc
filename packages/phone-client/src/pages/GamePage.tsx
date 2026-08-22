@@ -5,7 +5,7 @@ import { sfx } from "../game/sfx";
 import type { TeamInfo } from "../socket/useGameSocket";
 
 const CELL_PX = 28;
-const SWIPE_MIN_DISTANCE = 28;
+const SWIPE_MIN_DISTANCE = 20;
 
 // Torch sconces on the border walls — spaced down both sides, adapts to each level's height.
 function torchRows(height: number): number[] {
@@ -371,6 +371,21 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
     function onMove(e: TouchEvent) {
       if (!tracking) return;
       e.preventDefault();
+      
+      const currentX = e.touches[0].clientX;
+      const currentY = e.touches[0].clientY;
+      const dx = currentX - startX;
+      const dy = currentY - startY;
+      const adx = Math.abs(dx);
+      const ady = Math.abs(dy);
+      
+      if (Math.max(adx, ady) >= SWIPE_MIN_DISTANCE) {
+        const dir: Exclude<Dir, null> = adx > ady ? (dx > 0 ? "R" : "L") : (dy > 0 ? "D" : "U");
+        engineRef.current?.setDesiredDirection(dir);
+        // Reset start coordinates to current position to support continuous dragging/swiping
+        startX = currentX;
+        startY = currentY;
+      }
     }
     function onEnd(e: TouchEvent) {
       if (!tracking) return;
@@ -384,14 +399,19 @@ export default function GamePage({ playerName, team, onProgress }: Props) {
       const dir: Exclude<Dir, null> = adx > ady ? (dx > 0 ? "R" : "L") : dy > 0 ? "D" : "U";
       engineRef.current?.setDesiredDirection(dir);
     }
+    function onCancel() {
+      tracking = false;
+    }
 
     el.addEventListener("touchstart", onStart, { passive: true });
     el.addEventListener("touchmove", onMove, { passive: false });
     el.addEventListener("touchend", onEnd, { passive: true });
+    el.addEventListener("touchcancel", onCancel, { passive: true });
     return () => {
       el.removeEventListener("touchstart", onStart);
       el.removeEventListener("touchmove", onMove);
       el.removeEventListener("touchend", onEnd);
+      el.removeEventListener("touchcancel", onCancel);
     };
   }, []);
 
