@@ -642,12 +642,6 @@ function EndGameCard({
     ["House", team ? `${team.icon} ${team.name}` : "—"],
   ];
 
-  const redirectToLeaderboard = () => {
-    const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
-    window.location.href = `${protocol}//${hostname}:5173`;
-  };
-
   return (
     <div
       className="stone-panel end-card-pop"
@@ -686,14 +680,6 @@ function EndGameCard({
       <div style={{ fontSize: "clamp(13px, 3vw, 14.5px)", color: "var(--dim)", marginTop: 18, lineHeight: 1.5 }}>
         Your score has joined {team?.name ?? "your house"}'s total on the great hall board.
       </div>
-
-      <button
-        onClick={redirectToLeaderboard}
-        className="pixel-btn primary"
-        style={{ marginTop: 20, width: "100%", fontSize: 11, padding: "12px 10px" }}
-      >
-        Go to Leaderboard
-      </button>
     </div>
   );
 }
@@ -718,12 +704,6 @@ function HogwartsHonorCard({
     ["Lives Saved", `${lives} 🔮`],
     ["House", team ? `${team.icon} ${team.name}` : "—"],
   ];
-
-  const redirectToLeaderboard = () => {
-    const protocol = window.location.protocol;
-    const hostname = window.location.hostname;
-    window.location.href = `${protocol}//${hostname}:5173`;
-  };
 
   return (
     <div
@@ -763,14 +743,6 @@ function HogwartsHonorCard({
       <div style={{ fontSize: "clamp(13px, 3vw, 14.5px)", color: "var(--dim)", marginTop: 18, lineHeight: 1.5 }}>
         Your magic has contributed to {team?.name ?? "your house"}'s final standing.
       </div>
-
-      <button
-        onClick={redirectToLeaderboard}
-        className="pixel-btn primary"
-        style={{ marginTop: 20, width: "100%", fontSize: 11, padding: "12px 10px" }}
-      >
-        Go to Leaderboard
-      </button>
     </div>
   );
 }
