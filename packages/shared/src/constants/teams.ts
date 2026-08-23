@@ -24,4 +24,4 @@ export const TEAM_POOL: TeamIdentity[] = [
   { id: "wisp", name: "House Wisp", color: "#fecaca", darkColor: "#b91c1c", icon: "◇" },
 ];
 
-export const PLAYERS_PER_TEAM = 5;
+export const PLAYERS_PER_TEAM = 1;
