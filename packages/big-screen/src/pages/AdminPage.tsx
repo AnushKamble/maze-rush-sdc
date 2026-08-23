@@ -48,7 +48,12 @@ export default function AdminPage({ gameState, getSocket }: Props) {
           onClick={() => {
             unlockAudio();
             sfx.click();
-            setUnlocked(true);
+            const socket = getSocket();
+            if (!socket) return;
+            socket.emit("admin:verifyToken", { adminToken }, (res) => {
+              if (res.ok) setUnlocked(true);
+              else setAuthError(true);
+            });
           }}
         >
           Unlock Admin Panel
@@ -63,9 +68,8 @@ export default function AdminPage({ gameState, getSocket }: Props) {
 
   return (
     <div className="castle-bg" style={{ padding: 20, display: "flex", flexDirection: "column", gap: 16, height: "100%", overflowY: "auto" }}>
-      <h2 style={{ color: "var(--gold)", margin: 0, fontSize: "clamp(18px, 2.4vw, 24px)" }}>⚙️ Admin Panel — Maze Rush</h2>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10 }}>
-  <h2 style={{ color: "var(--gold)", margin: 0, fontSize: "clamp(18px, 2.4vw, 24px)" }}>⚙️ Admin Panel — Maze Rush</h2>
+        <h2 style={{ color: "var(--gold)", margin: 0, fontSize: "clamp(18px, 2.4vw, 24px)" }}>⚙️ Admin Panel — Maze Rush</h2>
         <label style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13.5, color: "var(--dim)" }}>
           Token:
           <input
@@ -90,7 +94,7 @@ export default function AdminPage({ gameState, getSocket }: Props) {
       </div>
       {authError && (
         <div style={{ padding: "10px 14px", borderRadius: 8, border: "1px solid var(--crimson)", background: "rgba(178,58,82,0.12)", color: "var(--crimson)", fontSize: 15 }}>
-          ⚠ Wrong admin token — that last action was rejected by the server. Tap "← Back" then "⚙️ Admin" to re-enter it.
+          ⚠ Wrong admin token — that last action was rejected by the server.
         </div>
       )}
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 14 }}>

@@ -17,6 +17,10 @@ export function registerAdminHandlers(socket: AppSocket, gameManager: GameManage
     socket.emit("admin:authError", { event });
   }
 
+  socket.on("admin:verifyToken", ({ adminToken }, ack) => {
+  ack({ ok: isAuthorized(adminToken) });
+  });
+
   socket.on("admin:startGame", ({ adminToken }) => {
     if (!isAuthorized(adminToken)) return reject(socket,"admin:startGame");
     gameManager.startCountdown();
@@ -48,7 +52,7 @@ export function registerAdminHandlers(socket: AppSocket, gameManager: GameManage
   });
 
   socket.on("admin:setFeaturedTeam", ({ adminToken, teamId }) => {
-    if (!isAuthorized(adminToken)) return reject(socket,"admin:setFeaturedEvent");
+    if (!isAuthorized(adminToken)) return reject(socket,"admin:setFeaturedTeam");
     gameManager.setFeaturedTeam(teamId);
   });
 

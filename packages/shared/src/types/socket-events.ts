@@ -30,6 +30,7 @@ export interface ClientToServerEvents {
   "host:requestState": (ack: (state: GameState) => void) => void;
 
   /** Admin panel actions — require an admin token issued out-of-band (see server/config/env.ts). */
+  "admin:verifyToken": (payload: { adminToken: string }, ack: (res: { ok: boolean }) => void) => void;
   "admin:startGame": (payload: { adminToken: string }) => void;
   "admin:pauseGame": (payload: { adminToken: string }) => void;
   "admin:resumeGame": (payload: { adminToken: string }) => void;
