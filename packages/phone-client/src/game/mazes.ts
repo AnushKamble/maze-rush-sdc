@@ -240,7 +240,7 @@ const LEVEL_NAMES = [
 
 const LEVEL_TAGS = ["EASY", "EASY", "MEDIUM", "MEDIUM", "MEDIUM", "HARD", "HARD", "HARD", "EXTREME", "EXTREME"];
 
-const GUARDIAN_COUNTS = [1, 2, 2, 3, 3, 4, 4, 5, 5, 5];
+const GUARDIAN_COUNTS = [1, 2, 2, 3, 2, 3, 4, 5, 5, 5];
 
 export const MAX_LEVELS = 10;
 export const TOTAL_LIVES = 3;
@@ -262,7 +262,7 @@ function buildLevel(levelNumber: number): LevelDef {
     powerUpCells: powerUpCellsFor(spec.width, spec.height, spec.colStep),
     // difficulty ramps continuously across all 10 levels, never resets
     playerSpeed: 4.0 + idx * 0.09,
-    guardianSpeed: 2.3 + idx * 0.22,
+    guardianSpeed: levelNumber === 5 ? 2.85 : levelNumber === 6 ? 3.05 : 2.3 + idx * 0.22,
     invulnerabilitySec: Math.max(1.2, 2.6 - idx * 0.15),
     powerUpChance: Math.max(0.15, 0.35 - idx * 0.02),
     requiresLandscape: spec.landscape,

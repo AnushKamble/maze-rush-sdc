@@ -25,11 +25,12 @@ export interface ClientToServerEvents {
    * into the team total and broadcast it to the big screen.
    */
   "player:progress": (payload: { score: number; level: number; lives: number; gameOver?: boolean }) => void;
-
+  "player:rehydrate": (payload: { playerId: string }, ack: (res: PlayerJoinAck) => void) => void;
   /** Big-screen/admin: request the current full game state on connect. */
   "host:requestState": (ack: (state: GameState) => void) => void;
 
   /** Admin panel actions — require an admin token issued out-of-band (see server/config/env.ts). */
+  "admin:verifyToken": (payload: { adminToken: string }, ack: (res: { ok: boolean }) => void) => void;
   "admin:startGame": (payload: { adminToken: string }) => void;
   "admin:pauseGame": (payload: { adminToken: string }) => void;
   "admin:resumeGame": (payload: { adminToken: string }) => void;
@@ -76,4 +77,5 @@ export interface ServerToClientEvents {
 
   /** Server rejects a move (hit a wall) — used only for phone haptic/visual feedback, not authoritative state. */
   "player:moveRejected": (reason: string) => void;
+  "admin:authError": (payload: { event: string }) => void;
 }

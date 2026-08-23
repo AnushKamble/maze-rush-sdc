@@ -12,7 +12,6 @@ export function registerPlayerHandlers(socket: AppSocket, gameManager: GameManag
     if (result.ok && result.player) {
       playerRegistry.set(result.player.id, socket.id);
       socket.data.playerId = result.player.id;
-
       const maze = gameManager.getPlayerMaze(result.player.id);
       if (maze) socket.emit("player:mazeAssigned", maze);
 
@@ -20,6 +19,19 @@ export function registerPlayerHandlers(socket: AppSocket, gameManager: GameManag
     }
     ack(result);
   });
+  socket.on("player:rehydrate", (payload, ack) => {
+    const self = gameManager.rehydratePlayer(payload.playerId);
+    if (!self) {
+      ack({ ok: false, error: "That session no longer exists — join fresh." });
+      return;
+    }
+    playerRegistry.set(self.id, socket.id);
+    socket.data.playerId = self.id;
+    const maze = gameManager.getPlayerMaze(self.id);
+    if (maze) socket.emit("player:mazeAssigned", maze);
+    logger.info("player:rehydrate ok", { playerId: self.id });
+    ack({ ok: true, player: self, teamId: self.teamId });
+  })
 
   socket.on("player:move", (payload) => {
     const playerId = socket.data.playerId as string | undefined;

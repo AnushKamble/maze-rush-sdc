@@ -15,16 +15,34 @@ export interface TeamInfo {
 
 export function useGameSocket() {
   const socketRef = useRef<AppSocket | null>(null);
+  const playerIdRef = useRef<string | null>(null);
   const [connected, setConnected] = useState(false);
   const [self, setSelf] = useState<PlayerSelfView | null>(null);
   const [team, setTeam] = useState<TeamInfo | null>(null);
   const [gameState, setGameState] = useState<GameState | null>(null);
+  const [rehydrating, setRehydrating] = useState(false);
 
   useEffect(() => {
     const socket: AppSocket = io(SERVER_URL, { transports: ["websocket", "polling"] });
     socketRef.current = socket;
 
-    socket.on("connect", () => setConnected(true));
+    socket.on("connect", () => {
+      setConnected(true);
+      const existingId = playerIdRef.current;
+      if(existingId){
+        setRehydrating(true);
+        socket.emit("player:rehydrate", { playerId: existingId }, (ack) => {
+        if(ack.ok && ack.player){
+          setSelf(ack.player);
+        }
+        else{
+          playerIdRef.current = null;
+          setSelf(null);
+          setTeam(null);
+        }
+        })
+      }
+    });
     socket.on("disconnect", () => setConnected(false));
     socket.on("player:selfUpdate", (view) => setSelf(view));
     socket.on("game:stateUpdate", (state) => setGameState(state));
@@ -41,6 +59,7 @@ export function useGameSocket() {
       socket.emit("player:join", { name }, (ack) => {
         if (ack.ok && ack.player) {
           setSelf(ack.player);
+          playerIdRef.current = ack.player.id;
           if (ack.teamId && ack.teamName) {
             setTeam({ id: ack.teamId, name: ack.teamName, color: ack.teamColor ?? "#e0b64a", icon: ack.teamIcon ?? "✦" });
           }
@@ -55,5 +74,5 @@ export function useGameSocket() {
     socketRef.current?.emit("player:progress", { score, level, lives, gameOver });
   }, []);
 
-  return { connected, self, team, gameState, join, reportProgress };
+  return { connected, self, team, gameState, join, reportProgress, rehydrating };
 }

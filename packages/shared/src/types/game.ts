@@ -19,6 +19,7 @@ export interface GameState {
   featuredTeamId: string | null;
   startedAt: number | null;
   endedAt: number | null;
+  finalResults: GameResults | null;
 }
 
 export interface FinalResultRow {

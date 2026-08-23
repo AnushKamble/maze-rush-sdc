@@ -26,6 +26,7 @@ export function setupConnectionHandler(io: AppServer, gameManager: GameManager):
       const playerId = socket.data.playerId as string | undefined;
       if (playerId) {
         playerRegistry.delete(playerId);
+        gameManager.markPlayerDisconnected(playerId);
         logger.debug("Player socket disconnected", { playerId });
       }
     });

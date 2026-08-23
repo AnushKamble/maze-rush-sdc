@@ -78,7 +78,7 @@ export default function App() {
       ) : gameState.phase === "countdown" ? (
         <CountdownPage count={countdown} />
       ) : gameState.phase === "ended" ? (
-        <FinalPage results={results} />
+        <FinalPage results={results ?? gameState.finalResults} />
       ) : (
         <DashboardPage gameState={gameState} />
       )}

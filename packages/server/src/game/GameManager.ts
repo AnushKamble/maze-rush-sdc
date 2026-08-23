@@ -11,6 +11,7 @@ import {
   type Direction,
   type PlayerJoinAck,
   type MazeLayout,
+  type PlayerSelfView,
 } from "@tmr/shared";
 import { PlayerSession } from "./PlayerSession.js";
 import { TeamManager, type TeamRuntime } from "./TeamManager.js";
@@ -51,6 +52,7 @@ export class GameManager extends EventEmitter {
   private tickInterval: NodeJS.Timeout | null = null;
   private previousTopTeamId: string | null = null;
   private currentSessionId = genSessionId();
+  private finalResults: GameResults | null = null;
 
   // ---------- Lobby / Join ----------
 
@@ -91,7 +93,22 @@ export class GameManager extends EventEmitter {
     const team = this.teams.get(session.data.teamId);
     return team?.maze ?? null;
   }
-
+  getPlayer(playerId: string): PlayerSession | null {
+    return this.players.get(playerId) ?? null;
+  }
+  markPlayerDisconnected(playerId: string): void {
+    const session = this.players.get(playerId);
+    if (!session) return;
+    session.setStatus("disconnected");
+    this.emitState();
+  }
+  rehydratePlayer(playerId: string): PlayerSelfView | null {
+    const session = this.players.get(playerId);
+    if (!session) return null;
+    session.setStatus("connected");
+    this.emitState();
+    return session.selfView();
+  }
   // ---------- Movement ----------
 
   handleMove(playerId: string, direction: Direction): void {
@@ -280,6 +297,7 @@ export class GameManager extends EventEmitter {
     this.phase = "ended";
     this.endedAt = Date.now();
     const results = this.buildResults();
+    this.finalResults = results;
     saveGameResults(results);
     this.emit("ended", results);
     this.emitState();
@@ -297,6 +315,7 @@ export class GameManager extends EventEmitter {
     this.endedAt = null;
     this.previousTopTeamId = null;
     this.currentSessionId = genSessionId();
+    this.finalResults = null;
     this.emitState();
   }
 
@@ -383,6 +402,7 @@ export class GameManager extends EventEmitter {
       featuredTeamId: this.featuredTeamId ?? teams[0]?.id ?? null,
       startedAt: this.startedAt,
       endedAt: this.endedAt,
+      finalResults: this.finalResults
     };
   }
 

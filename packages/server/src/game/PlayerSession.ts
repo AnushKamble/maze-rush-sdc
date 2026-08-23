@@ -1,4 +1,4 @@
-import type { Direction, GridPosition, Player, PlayerPublicView, PlayerSelfView } from "@tmr/shared";
+import type { Direction, GridPosition, Player, PlayerConnectionStatus, PlayerPublicView, PlayerSelfView } from "@tmr/shared";
 
 /**
  * Server-side runtime wrapper around a Player. Holds the live socket id
@@ -33,6 +33,10 @@ export class PlayerSession {
 
   addScore(points: number): void {
     this.data.score += points;
+  }
+
+  setStatus(status: PlayerConnectionStatus): void {
+    this.data.status = status;
   }
 
   /** Called from the phone client's local single-player engine reports (player:progress). */
