@@ -15,24 +15,17 @@ export interface TeamInfo {
 
 export function useGameSocket() {
   const socketRef = useRef<AppSocket | null>(null);
-<<<<<<< HEAD
   const playerIdRef = useRef<string | null>(null);
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
   const [connected, setConnected] = useState(false);
   const [self, setSelf] = useState<PlayerSelfView | null>(null);
   const [team, setTeam] = useState<TeamInfo | null>(null);
   const [gameState, setGameState] = useState<GameState | null>(null);
-<<<<<<< HEAD
   const [rehydrating, setRehydrating] = useState(false);
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
 
   useEffect(() => {
     const socket: AppSocket = io(SERVER_URL, { transports: ["websocket", "polling"] });
     socketRef.current = socket;
 
-<<<<<<< HEAD
     socket.on("connect", () => {
       setConnected(true);
       const existingId = playerIdRef.current;
@@ -50,9 +43,6 @@ export function useGameSocket() {
         })
       }
     });
-=======
-    socket.on("connect", () => setConnected(true));
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
     socket.on("disconnect", () => setConnected(false));
     socket.on("player:selfUpdate", (view) => setSelf(view));
     socket.on("game:stateUpdate", (state) => setGameState(state));
@@ -69,10 +59,7 @@ export function useGameSocket() {
       socket.emit("player:join", { name }, (ack) => {
         if (ack.ok && ack.player) {
           setSelf(ack.player);
-<<<<<<< HEAD
           playerIdRef.current = ack.player.id;
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
           if (ack.teamId && ack.teamName) {
             setTeam({ id: ack.teamId, name: ack.teamName, color: ack.teamColor ?? "#e0b64a", icon: ack.teamIcon ?? "✦" });
           }
@@ -87,9 +74,5 @@ export function useGameSocket() {
     socketRef.current?.emit("player:progress", { score, level, lives, gameOver });
   }, []);
 
-<<<<<<< HEAD
   return { connected, self, team, gameState, join, reportProgress, rehydrating };
-=======
-  return { connected, self, team, gameState, join, reportProgress };
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
 }

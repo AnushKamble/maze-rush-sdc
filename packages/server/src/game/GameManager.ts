@@ -11,10 +11,7 @@ import {
   type Direction,
   type PlayerJoinAck,
   type MazeLayout,
-<<<<<<< HEAD
   type PlayerSelfView,
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
 } from "@tmr/shared";
 import { PlayerSession } from "./PlayerSession.js";
 import { TeamManager, type TeamRuntime } from "./TeamManager.js";
@@ -55,10 +52,7 @@ export class GameManager extends EventEmitter {
   private tickInterval: NodeJS.Timeout | null = null;
   private previousTopTeamId: string | null = null;
   private currentSessionId = genSessionId();
-<<<<<<< HEAD
   private finalResults: GameResults | null = null;
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
 
   // ---------- Lobby / Join ----------
 
@@ -99,7 +93,6 @@ export class GameManager extends EventEmitter {
     const team = this.teams.get(session.data.teamId);
     return team?.maze ?? null;
   }
-<<<<<<< HEAD
   getPlayer(playerId: string): PlayerSession | null {
     return this.players.get(playerId) ?? null;
   }
@@ -116,9 +109,6 @@ export class GameManager extends EventEmitter {
     this.emitState();
     return session.selfView();
   }
-=======
-
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
   // ---------- Movement ----------
 
   handleMove(playerId: string, direction: Direction): void {
@@ -307,10 +297,7 @@ export class GameManager extends EventEmitter {
     this.phase = "ended";
     this.endedAt = Date.now();
     const results = this.buildResults();
-<<<<<<< HEAD
     this.finalResults = results;
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
     saveGameResults(results);
     this.emit("ended", results);
     this.emitState();
@@ -328,10 +315,7 @@ export class GameManager extends EventEmitter {
     this.endedAt = null;
     this.previousTopTeamId = null;
     this.currentSessionId = genSessionId();
-<<<<<<< HEAD
     this.finalResults = null;
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
     this.emitState();
   }
 
@@ -418,10 +402,7 @@ export class GameManager extends EventEmitter {
       featuredTeamId: this.featuredTeamId ?? teams[0]?.id ?? null,
       startedAt: this.startedAt,
       endedAt: this.endedAt,
-<<<<<<< HEAD
       finalResults: this.finalResults
-=======
->>>>>>> 175e466a4804ef19fb3980a82311af4368ce028f
     };
   }
 
