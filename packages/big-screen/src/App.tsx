@@ -29,9 +29,9 @@ export default function App() {
 
   if (!connected || !gameState) {
     return (
-      <div className="castle-bg" style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", justifyContent: "center", height: "100vh", color: "var(--gold)" }}>
-        <div style={{ fontSize: 30 }}>🕯️</div>
-        <div style={{ fontFamily: "var(--font-pixel)", fontSize: 14, letterSpacing: 1 }}>Connecting to the castle...</div>
+      <div className="castle-bg" style={{ display: "flex", flexDirection: "column", gap: 12, alignItems: "center", justifyContent: "center", height: "100vh", color: "var(--gold)" }}>
+        <div style={{ fontSize: 36, animation: "sparklePulse 2s ease-in-out infinite" }}>🕯️</div>
+        <div style={{ fontFamily: "var(--font-pixel)", fontSize: 13, letterSpacing: 2, color: "var(--gold)", textShadow: "0 0 12px rgba(224,182,74,0.5)" }}>Connecting to the castle...</div>
       </div>
     );
   }
@@ -47,28 +47,41 @@ export default function App() {
         style={
           showAdmin
             ? {
-                position: "absolute",
-                top: 14,
-                right: 18,
-                zIndex: 10,
-                width: 270,
-                height: 52,
-                fontSize: 13,
-                letterSpacing: "1px",
-                fontFamily: "'Cinzel', Georgia, serif",
-                fontVariant: "small-caps",
-                fontWeight: 600,
-                background: "#0b1018",
-                color: "#dca53b",
-                border: "1px solid #a87524",
-                borderRadius: 2,
-                clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
-                cursor: "pointer",
-              }
-            : { position: "absolute", top: 10, right: 10, zIndex: 10, fontSize: 12, padding: "8px 12px" }
+              position: "absolute",
+              top: 14,
+              right: 18,
+              zIndex: 10,
+              width: 270,
+              height: 52,
+              fontSize: 13,
+              letterSpacing: "1px",
+              fontFamily: "'Cinzel', Georgia, serif",
+              fontVariant: "small-caps",
+              fontWeight: 600,
+              background: "#0b1018",
+              color: "#dca53b",
+              border: "1px solid #a87524",
+              borderRadius: 2,
+              clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
+              cursor: "pointer",
+            }
+            : { position: "absolute", top: 14, right: 14, zIndex: 10, fontSize: 12, padding: "7px 14px" }
         }
+        onMouseEnter={(e) => {
+          if (!showAdmin) {
+            (e.currentTarget as HTMLButtonElement).style.background = "rgba(224,182,74,0.12)";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 16px rgba(224,182,74,0.35)";
+          }
+        }}
+        onMouseLeave={(e) => {
+          if (!showAdmin) {
+            (e.currentTarget as HTMLButtonElement).style.background = "";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "";
+          }
+        }}
       >
         {showAdmin ? "‹  RETURN TO LOBBY" : "⚙️ Admin"}
+
       </button>
 
       {showAdmin ? (
