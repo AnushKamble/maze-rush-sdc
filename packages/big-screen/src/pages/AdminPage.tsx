@@ -50,7 +50,7 @@ export default function AdminPage({ gameState, getSocket }: Props) {
             sfx.click();
             const socket = getSocket();
             if (!socket) return;
-            socket.emit("admin:verifyToken", { adminToken }, (res) => {
+            socket.emit("admin:verifyToken", { adminToken }, (res: { ok: boolean }) => {
               if (res.ok) setUnlocked(true);
               else setAuthError(true);
             });
