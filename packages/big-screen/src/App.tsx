@@ -43,10 +43,32 @@ export default function App() {
           sfx.click();
           setShowAdmin((v) => !v);
         }}
-        className="btn btn-neutral"
-        style={{ position: "absolute", top: 10, right: 10, zIndex: 10, fontSize: 12, padding: "8px 12px" }}
+        className={showAdmin ? "btn btn-primary" : "btn btn-neutral"}
+        style={
+          showAdmin
+            ? {
+                position: "absolute",
+                top: 14,
+                right: 18,
+                zIndex: 10,
+                width: 270,
+                height: 52,
+                fontSize: 13,
+                letterSpacing: "1px",
+                fontFamily: "'Cinzel', Georgia, serif",
+                fontVariant: "small-caps",
+                fontWeight: 600,
+                background: "#0b1018",
+                color: "#dca53b",
+                border: "1px solid #a87524",
+                borderRadius: 2,
+                clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
+                cursor: "pointer",
+              }
+            : { position: "absolute", top: 10, right: 10, zIndex: 10, fontSize: 12, padding: "8px 12px" }
+        }
       >
-        {showAdmin ? "← Back" : "⚙️ Admin"}
+        {showAdmin ? "‹  RETURN TO LOBBY" : "⚙️ Admin"}
       </button>
 
       {showAdmin ? (
