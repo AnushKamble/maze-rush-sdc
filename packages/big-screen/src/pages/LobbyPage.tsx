@@ -5,7 +5,7 @@ const PHONE_URL = import.meta.env.VITE_PHONE_CLIENT_URL || "http://localhost:517
 
 export default function LobbyPage({ gameState }: { gameState: GameState }) {
   const qrTarget = encodeURIComponent(PHONE_URL);
-  const qrImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${qrTarget}&color=242-231-201&bgcolor=11-9-23&margin=10`;
+  const qrImgSrc = `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${qrTarget}&color=242-231-201&bgcolor=14-11-30&margin=10`;
 
   const particles = useMemo(
     () =>
@@ -93,8 +93,8 @@ export default function LobbyPage({ gameState }: { gameState: GameState }) {
         <img
           src={qrImgSrc}
           alt="Scan to join"
-          width={240}
-          height={240}
+          width={220}
+          height={220}
           style={{ borderRadius: 4, display: "block" }}
         />
         <span style={{ position: "absolute", top: -12, left: -12, color: "var(--gold)", fontSize: 18, opacity: 0.85 }}>✦</span>
