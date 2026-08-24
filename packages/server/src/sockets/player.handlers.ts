@@ -27,6 +27,7 @@ export function registerPlayerHandlers(socket: AppSocket, gameManager: GameManag
     }
     const result = gameManager.joinPlayer(payload.name, socket.id);
     if (result.ok && result.player) {
+      if (deviceId) deviceRegistry.set(deviceId, result.player.id);
       playerRegistry.set(result.player.id, socket.id);
       socket.data.playerId = result.player.id;
       const maze = gameManager.getPlayerMaze(result.player.id);

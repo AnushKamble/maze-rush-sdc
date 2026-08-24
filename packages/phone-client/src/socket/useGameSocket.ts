@@ -15,7 +15,9 @@ export interface TeamInfo {
 
 export function useGameSocket() {
   const socketRef = useRef<AppSocket | null>(null);
-  const playerIdRef = useRef<string | null>(null);
+  const playerIdRef = useRef<string | null>(
+    typeof window !== "undefined" ? sessionStorage.getItem("tmr_playerId") : null
+  );
   const [connected, setConnected] = useState(false);
   const [self, setSelf] = useState<PlayerSelfView | null>(null);
   const [team, setTeam] = useState<TeamInfo | null>(null);

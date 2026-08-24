@@ -4,9 +4,9 @@ import WaitingPage from "./pages/WaitingPage.js";
 import GamePage from "./pages/GamePage.js";
 
 export default function App() {
-  const { connected, self, team, gameState, join, reportProgress } = useGameSocket();
+  const { connected, self, team, gameState, join, reportProgress, rehydrating } = useGameSocket();
 
-  if (!connected) {
+  if (!connected || rehydrating) {
     return (
       <div className="castle-bg" style={{ display: "flex", flexDirection: "column", gap: 10, alignItems: "center", justifyContent: "center", height: "100vh", color: "var(--gold)" }}>
         <div style={{ fontSize: 30 }} className="torch">🕯️</div>
