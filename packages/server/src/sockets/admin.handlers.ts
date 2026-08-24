@@ -1,8 +1,5 @@
 import type { Socket } from "socket.io";
-<<<<<<< HEAD
 import { deviceRegistry } from "./deviceRegistry.js";
-=======
->>>>>>> 7107bbe982bd855752052d9d20071b6a26577fe6
 import type { ClientToServerEvents, ServerToClientEvents } from "@tmr/shared";
 import { GameManager } from "../game/GameManager.js";
 import { env } from "../config/env.js";
