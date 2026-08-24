@@ -105,9 +105,11 @@ export class GameManager extends EventEmitter {
   rehydratePlayer(playerId: string): PlayerSelfView | null {
     const session = this.players.get(playerId);
     if (!session) return null;
+    const team = this.teams.get(session.data.teamId);
+    if (!team) return null;
     session.setStatus("connected");
     this.emitState();
-    return session.selfView();
+    return { self: session.selfView(), team: team.identity };
   }
   // ---------- Movement ----------
 
