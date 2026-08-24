@@ -32,18 +32,14 @@ export function useGameSocket() {
       if(existingId){
         setRehydrating(true);
         socket.emit("player:rehydrate", { playerId: existingId }, (ack) => {
-          setRehydrating(false);
-          if(ack.ok && ack.player){
-            setSelf(ack.player);
-            if (ack.teamId && ack.teamName) {
-            setTeam({ id: ack.teamId, name: ack.teamName, color: ack.teamColor ?? "#e0b64a", icon: ack.teamIcon ?? "✦" }); // <-- was missing
-            }
-          }
-          else{
-            playerIdRef.current = null;
-            setSelf(null);
-            setTeam(null);
-          }
+        if(ack.ok && ack.player){
+          setSelf(ack.player);
+        }
+        else{
+          playerIdRef.current = null;
+          setSelf(null);
+          setTeam(null);
+        }
         })
       }
     });
