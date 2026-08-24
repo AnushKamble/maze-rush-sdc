@@ -102,7 +102,7 @@ export class GameManager extends EventEmitter {
     session.setStatus("disconnected");
     this.emitState();
   }
-  rehydratePlayer(playerId: string): { self: PlayerSelfView; team: TeamIdentity } | null {
+  rehydratePlayer(playerId: string): PlayerSelfView | null {
     const session = this.players.get(playerId);
     if (!session) return null;
     const team = this.teams.get(session.data.teamId);
