@@ -1,0 +1,749 @@
+{
+  "id": "level1_maze_01",
+  "level": 1,
+  "gridWidth": 10,
+  "gridHeight": 10,
+  "cells": [
+    {
+      "x": 0,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 2,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 5,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 7,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 8,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 9,
+      "y": 0,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 1,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 1,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 1,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 2,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 2,
+      "type": "wall"
+    },
+    {
+      "x": 8,
+      "y": 2,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 2,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 7,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 3,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 3,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 4,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 4,
+      "type": "wall"
+    },
+    {
+      "x": 8,
+      "y": 4,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 4,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 5,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 5,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 5,
+      "type": "gate_closed"
+    },
+    {
+      "x": 0,
+      "y": 6,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 6,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 6,
+      "type": "wall"
+    },
+    {
+      "x": 7,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 6,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 6,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 7,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 7,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 7,
+      "type": "wall"
+    },
+    {
+      "x": 5,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 7,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 7,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 8,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 2,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 3,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 4,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 5,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 6,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 7,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 8,
+      "y": 8,
+      "type": "open"
+    },
+    {
+      "x": 9,
+      "y": 8,
+      "type": "wall"
+    },
+    {
+      "x": 0,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 2,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 3,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 4,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 5,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 7,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 8,
+      "y": 9,
+      "type": "wall"
+    },
+    {
+      "x": 9,
+      "y": 9,
+      "type": "wall"
+    }
+  ],
+  "collectibleSpawns": [
+    {
+      "id": "crystal_1",
+      "type": "crystal_special",
+      "position": {
+        "x": 1,
+        "y": 1
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_2",
+      "type": "crystal_normal",
+      "position": {
+        "x": 4,
+        "y": 1
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_3",
+      "type": "crystal_normal",
+      "position": {
+        "x": 7,
+        "y": 1
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_4",
+      "type": "crystal_special",
+      "position": {
+        "x": 2,
+        "y": 2
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_5",
+      "type": "crystal_normal",
+      "position": {
+        "x": 5,
+        "y": 2
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_6",
+      "type": "crystal_normal",
+      "position": {
+        "x": 1,
+        "y": 3
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_7",
+      "type": "crystal_special",
+      "position": {
+        "x": 5,
+        "y": 3
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_8",
+      "type": "crystal_normal",
+      "position": {
+        "x": 1,
+        "y": 4
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_9",
+      "type": "crystal_normal",
+      "position": {
+        "x": 4,
+        "y": 4
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_10",
+      "type": "crystal_special",
+      "position": {
+        "x": 8,
+        "y": 4
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_11",
+      "type": "crystal_normal",
+      "position": {
+        "x": 3,
+        "y": 5
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_12",
+      "type": "crystal_normal",
+      "position": {
+        "x": 6,
+        "y": 5
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_13",
+      "type": "crystal_special",
+      "position": {
+        "x": 1,
+        "y": 6
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_14",
+      "type": "crystal_normal",
+      "position": {
+        "x": 5,
+        "y": 6
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_15",
+      "type": "crystal_normal",
+      "position": {
+        "x": 1,
+        "y": 7
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_16",
+      "type": "crystal_special",
+      "position": {
+        "x": 6,
+        "y": 7
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_17",
+      "type": "crystal_normal",
+      "position": {
+        "x": 1,
+        "y": 8
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_18",
+      "type": "crystal_normal",
+      "position": {
+        "x": 4,
+        "y": 8
+      },
+      "active": true
+    },
+    {
+      "id": "crystal_19",
+      "type": "crystal_special",
+      "position": {
+        "x": 7,
+        "y": 8
+      },
+      "active": true
+    },
+    {
+      "id": "boost_1",
+      "type": "boost_shield",
+      "position": {
+        "x": 5,
+        "y": 5
+      },
+      "active": true
+    }
+  ],
+  "monsterSpawns": [
+    {
+      "id": "mon_1",
+      "behavior": "patrol",
+      "spawnPosition": {
+        "x": 4,
+        "y": 2
+      },
+      "patrolPath": [
+        {
+          "x": 4,
+          "y": 2
+        },
+        {
+          "x": 5,
+          "y": 2
+        },
+        {
+          "x": 5,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 3
+        }
+      ]
+    }
+  ],
+  "playerSpawnPoints": [
+    {
+      "x": 1,
+      "y": 1
+    },
+    {
+      "x": 8,
+      "y": 1
+    },
+    {
+      "x": 1,
+      "y": 8
+    },
+    {
+      "x": 8,
+      "y": 8
+    },
+    {
+      "x": 1,
+      "y": 5
+    }
+  ],
+  "toggleableGates": [
+    {
+      "id": "gate_east_1",
+      "position": {
+        "x": 9,
+        "y": 5
+      }
+    }
+  ]
+}

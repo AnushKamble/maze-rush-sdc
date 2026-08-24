@@ -1,0 +1,1 @@
+export const deviceRegistry = new Map<string, string>();

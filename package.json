@@ -1,0 +1,19 @@
+{
+  "name": "team-maze-rush",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Team Maze Rush — SDC Orientation live multiplayer maze game",
+  "scripts": {
+    "dev:server": "pnpm --filter @tmr/server dev",
+    "dev:big-screen": "pnpm --filter @tmr/big-screen dev",
+    "dev:phone": "pnpm --filter @tmr/phone-client dev",
+    "dev": "pnpm run -r --parallel dev",
+    "build": "pnpm run -r build",
+    "test": "pnpm --filter @tmr/server test",
+    "typecheck": "pnpm run -r typecheck"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "packageManager": "pnpm@9.0.0"
+}

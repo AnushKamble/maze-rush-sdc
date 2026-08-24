@@ -1,0 +1,217 @@
+/* ============================================================
+   MAZE RUSH — "The Enchanted Maze"
+   8-bit / pixel-art wizarding-academy design system (big screen)
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+
+:root {
+  color-scheme: dark;
+  --bg: #0b0917;
+  --bg-2: #14112a;
+  --panel: #1e1a33;
+  --panel-2: #2a2547;
+  --stone-line: #423a63;
+  --ink: #f2e6c9;
+  --dim: #a89bd0;
+
+  --purple: #e0b64a;      /* gold — primary accent (kept var name for drop-in) */
+  --purple-light: #f5d888;
+  --pink: #b23a52;        /* crimson */
+  --green: #2f8f5b;       /* emerald */
+  --orange: #e0813a;      /* candle orange */
+  --line: #423a63;
+
+  --gold: #e0b64a;
+  --gold-bright: #f5d888;
+  --crimson: #b23a52;
+  --emerald: #2f8f5b;
+  --royal-blue: #3d5ba0;
+  --candle: #e0813a;
+  --parchment: #f2e6c9;
+
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-retro: 'VT323', monospace;
+}
+
+* { box-sizing: border-box; }
+html, body, #root { height: 100%; margin: 0; }
+body {
+  background-color: var(--bg);
+  background:
+    radial-gradient(ellipse at 50% -10%, rgba(224,182,74,0.08), transparent 55%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
+  color: var(--ink);
+  font-family: var(--font-retro);
+  font-size: 22px;
+  overflow: hidden;
+}
+h1, h2, h3, .pixel-heading { font-family: var(--font-pixel); letter-spacing: 0.5px; line-height: 1.6; }
+
+.card {
+  background: linear-gradient(180deg, var(--panel-2), var(--panel));
+  border: 2px solid var(--stone-line);
+  border-radius: 8px;
+  box-shadow: inset 0 0 0 1px rgba(224,182,74,0.12), 0 4px 14px rgba(0,0,0,0.45);
+}
+
+button { cursor: pointer; font-family: inherit; }
+
+.btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  border: 2px solid var(--gold);
+  font-weight: 700;
+  font-size: 13px;
+  font-family: var(--font-pixel);
+  letter-spacing: 0.5px;
+  color: var(--ink);
+  background: var(--panel-2);
+  box-shadow: 0 4px 0 #12101f;
+  transition: transform 0.08s ease;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 1px 0 #12101f; }
+.btn-primary { background: linear-gradient(180deg, #f0c95f, #d4a13b); color: #1a1330; border-color: #7a5a1e; box-shadow: 0 4px 0 #7a5a1e; }
+.btn-primary:active { box-shadow: 0 1px 0 #7a5a1e; }
+.btn-danger { background: var(--crimson); border-color: #6e2436; }
+.btn-neutral { background: var(--panel-2); color: var(--dim); }
+
+.castle-bg {
+  position: relative;
+  background-image: url('/castle-bg.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+.castle-bg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(224,182,74,0.06) 0%, transparent 55%),
+    linear-gradient(180deg,
+      rgba(11,9,23,0.45) 0%,
+      rgba(18,14,40,0.35) 40%,
+      rgba(18,14,40,0.50) 70%,
+      rgba(11,9,23,0.65) 100%
+    );
+  pointer-events: none;
+  z-index: 0;
+}
+.castle-bg > * { position: relative; z-index: 1; }
+
+@keyframes scoreFlash {
+  0% { box-shadow: 0 0 0 0 rgba(224,182,74,0); }
+  30% { box-shadow: 0 0 16px 3px rgba(224,182,74,0.6); }
+  100% { box-shadow: 0 0 0 0 rgba(224,182,74,0); }
+}
+.score-flash { animation: scoreFlash 0.65s ease; }
+
+@keyframes eventPop {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.event-enter { animation: eventPop 0.4s ease; }
+
+@keyframes sparklePulse {
+  0%, 100% { text-shadow: 0 0 6px rgba(240,201,95,0.4), 0 0 2px rgba(255,255,255,0.2); }
+  50% { text-shadow: 0 0 14px rgba(240,201,95,0.65), 0 0 4px rgba(255,255,255,0.35); }
+}
+.glow-gold { animation: sparklePulse 3.6s ease-in-out infinite; }
+.text-glow-soft { text-shadow: 0 0 8px rgba(240,201,95,0.3); }
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  15% { opacity: 0.9; }
+  85% { opacity: 0.7; }
+  100% { transform: translateY(-300px) translateX(var(--drift, 14px)); opacity: 0; }
+}
+.magic-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 8px 2px rgba(245,216,136,0.7);
+  animation: floatParticle linear infinite;
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* QR code decorative border */
+.qr-frame {
+  position: relative;
+  padding: 16px;
+  border: 3px solid var(--gold);
+  border-radius: 10px;
+  background: rgba(20,17,42,0.75);
+  box-shadow:
+    0 0 0 1px rgba(224,182,74,0.25),
+    0 0 32px rgba(224,182,74,0.20),
+    inset 0 0 16px rgba(224,182,74,0.06);
+}
+.qr-frame::before,
+.qr-frame::after {
+  content: '✦';
+  position: absolute;
+  color: var(--gold);
+  font-size: 20px;
+  opacity: 0.85;
+  animation: sparklePulse 2.5s ease-in-out infinite;
+}
+.qr-frame::before { top: -14px; left: 50%; transform: translateX(-50%); }
+.qr-frame::after  { bottom: -14px; left: 50%; transform: translateX(-50%); }
+
+/* stat badge */
+.stat-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+.stat-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  background: rgba(224,182,74,0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 0 12px rgba(224,182,74,0.3);
+}
+
+/* divider line */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--gold);
+  width: 100%;
+  max-width: 540px;
+  opacity: 0.7;
+}
+.gold-divider::before,
+.gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, transparent, var(--gold), transparent);
+}
+
+/* waiting text animation */
+@keyframes fadePulse {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+.waiting-text {
+  animation: fadePulse 2.8s ease-in-out infinite;
+  font-family: var(--font-retro);
+  font-size: clamp(17px, 2vw, 22px);
+  color: var(--parchment);
+  letter-spacing: 0.5px;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+.twinkle-star { animation: twinkle ease-in-out infinite; }
