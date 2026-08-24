@@ -1,18 +1,12 @@
 import { createServer } from "node:http";
-<<<<<<< HEAD
 import { randomUUID } from "node:crypto";
-=======
->>>>>>> 7107bbe982bd855752052d9d20071b6a26577fe6
 import express from "express";
 import cors from "cors";
 import { Server } from "socket.io";
 import type { ClientToServerEvents, ServerToClientEvents } from "@tmr/shared";
 import { env } from "./config/env.js";
 import { logger } from "./utils/logger.js";
-<<<<<<< HEAD
 import { parseCookies } from "./utils/cookies.js";
-=======
->>>>>>> 7107bbe982bd855752052d9d20071b6a26577fe6
 import { mazeRegistry } from "./mazes/mazeLoader.js";
 import { GameManager } from "./game/GameManager.js";
 import { subscribeBroadcasts } from "./sockets/broadcast.js";
