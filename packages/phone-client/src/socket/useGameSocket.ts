@@ -16,7 +16,7 @@ export interface TeamInfo {
 export function useGameSocket() {
   const socketRef = useRef<AppSocket | null>(null);
   const playerIdRef = useRef<string | null>(
-    typeof window !== "undefined" ? sessionStorage.getItem("tmr_playerId") : null
+    typeof window !== "undefined" ? localStorage.getItem("tmr_playerId") : null
   );
   const [connected, setConnected] = useState(false);
   const [self, setSelf] = useState<PlayerSelfView | null>(null);
@@ -33,22 +33,31 @@ export function useGameSocket() {
       const existingId = playerIdRef.current;
       if(existingId){
         setRehydrating(true);
-        socket.emit("player:rehydrate", { playerId: existingId }, (ack) => {
-        if(ack.ok && ack.player){
+        socket
+        .timeout(6000)
+        .emit("player:rehydrate", { playerId: existingId }, (err, ack: PlayerJoinAck | undefined) => {
+        if (!err && ack?.ok && ack.player) {
           setSelf(ack.player);
-          const savedTeam = sessionStorage.getItem("tmr_teamInfo");
-          if (savedTeam) {
-            setTeam(JSON.parse(savedTeam));
+          if (ack.teamId && ack.teamName) {
+            const teamInfo: TeamInfo = {
+              id: ack.teamId,
+              name: ack.teamName,
+              color: ack.teamColor ?? "#e0b64a",
+              icon: ack.teamIcon ?? "✦",
+            };
+            setTeam(teamInfo);
+            localStorage.setItem("tmr_teamInfo", JSON.stringify(teamInfo));
           }
-        }
-        else{
+        } 
+        else {
           playerIdRef.current = null;
-          sessionStorage.removeItem("tmr_playerId");
-          sessionStorage.removeItem("tmr_teamInfo");
+          localStorage.removeItem("tmr_playerId");
+          localStorage.removeItem("tmr_teamInfo");
           setSelf(null);
           setTeam(null);
-        }
-        })
+          }
+          setRehydrating(false);
+          });
       }
     });
     socket.on("disconnect", () => setConnected(false));
@@ -68,9 +77,16 @@ export function useGameSocket() {
         if (ack.ok && ack.player) {
           setSelf(ack.player);
           playerIdRef.current = ack.player.id;
-          sessionStorage.setItem("tmr_playerId", ack.player.id);
+          localStorage.setItem("tmr_playerId", ack.player.id);
           if (ack.teamId && ack.teamName) {
-            setTeam({ id: ack.teamId, name: ack.teamName, color: ack.teamColor ?? "#e0b64a", icon: ack.teamIcon ?? "✦" });
+            const teamInfo: TeamInfo = {
+              id: ack.teamId,
+              name: ack.teamName,
+              color: ack.teamColor ?? "#e0b64a",
+              icon: ack.teamIcon ?? "✦",
+            };
+            setTeam(teamInfo);
+            localStorage.setItem("tmr_teamInfo", JSON.stringify(teamInfo));
           }
         }
         resolve(ack);

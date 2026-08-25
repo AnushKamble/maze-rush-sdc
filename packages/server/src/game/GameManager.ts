@@ -96,6 +96,10 @@ export class GameManager extends EventEmitter {
   getPlayer(playerId: string): PlayerSession | null {
     return this.players.get(playerId) ?? null;
   }
+  getTeamIdentity(teamId: string): { name: string; color: string; icon: string } | null {
+    const team = this.teams.get(teamId);
+    return team ? { name: team.identity.name, color: team.identity.color, icon: team.identity.icon } : null;
+  }
   markPlayerDisconnected(playerId: string): void {
     const session = this.players.get(playerId);
     if (!session) return;

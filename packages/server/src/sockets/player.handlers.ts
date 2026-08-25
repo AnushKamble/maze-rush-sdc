@@ -19,8 +19,16 @@ export function registerPlayerHandlers(socket: AppSocket, gameManager: GameManag
         socket.data.playerId = existingPlayerId;
         const maze = gameManager.getPlayerMaze(existingPlayerId);
         if (maze) socket.emit("player:mazeAssigned", maze);
+        const identity = gameManager.getTeamIdentity(rehydrated.teamId);
         logger.info("player:join -> reused existing device player", { playerId: existingPlayerId });
-        ack({ ok: true, player: rehydrated, teamId: rehydrated.teamId });
+        ack({
+          ok: true,
+          player: rehydrated,
+          teamId: rehydrated.teamId,
+          teamName: identity?.name,
+          teamColor: identity?.color,
+          teamIcon: identity?.icon,
+        });
         return;
       }
       if (deviceId) deviceRegistry.delete(deviceId);
