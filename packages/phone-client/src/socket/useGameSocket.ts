@@ -27,12 +27,7 @@ export function useGameSocket() {
   useEffect(() => {
     let cancelled = false;
     (async()=>{
-      try{
-        await fetch(`${SERVER_URL}/device`, { credentials: "include" });
-      }
-      catch{
-      }
-      if (cancelled) return;
+      fetch(`${SERVER_URL}/device`, { credentials: "include" }).catch(() => {});
       const socket: AppSocket = io(SERVER_URL, { transports: ["websocket", "polling"], withCredentials : true });
       socketRef.current = socket;
 
@@ -65,8 +60,7 @@ export function useGameSocket() {
     })();
 
     return () => {
-      cancelled = true,
-      socketRef.current?.disconnect();
+      socket.disconnect();
     };
   }, []);
 
