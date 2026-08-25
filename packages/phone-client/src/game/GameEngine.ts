@@ -35,6 +35,11 @@ interface GuardianState {
 }
 
 export type GamePhase = "playing" | "hit" | "levelTransition" | "gameOver" | "victory";
+export interface EngineInitialState {
+  levelIndex: number;
+  score: number;
+  lives: number;
+}
 
 export interface EngineSnapshot {
   phase: GamePhase;
@@ -82,10 +87,23 @@ export class GameEngine {
   now = 0;
   message: string | null = null;
 
-  constructor(private onLevelStart?: (def: LevelDef) => void) {
+  constructor(private onLevelStart?: (def: LevelDef) => void, initial?: EngineInitialState) {
     this.runes = new Set();
-    this.loadLevel(0, false);
-  }
+    const startIndex = initial ? Math.min(Math.max(Math.floor(initial.levelIndex), 0), MAX_LEVELS - 1) : 0;
+    this.loadLevel(startIndex, false);
+    if (initial) {
+      this.score = Math.max(initial.score, 0);
+      this.highestLevelReached = Math.max(this.highestLevelReached, startIndex + 1);
+      if (initial.lives <= 0) {
+        this.lives = 0;
+        this.phase = "gameOver";
+        this.message = "The spell failed!";
+      } 
+      else {
+        this.lives = Math.min(initial.lives, TOTAL_LIVES);
+      }
+    }
+  } 
 
   private levelDef(): LevelDef {
     return LEVELS[this.levelIndex];

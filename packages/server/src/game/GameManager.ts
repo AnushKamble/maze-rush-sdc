@@ -205,6 +205,7 @@ export class GameManager extends EventEmitter {
     playerId: string,
     payload: { score: number; level: number; lives: number; gameOver?: boolean }
   ): void {
+    if (this.phase !== "live") return;
     const session = this.players.get(playerId);
     if (!session) return;
     const team = this.teams.get(session.data.teamId);
@@ -214,7 +215,8 @@ export class GameManager extends EventEmitter {
     const previousLives = session.data.lives;
     const score = Math.max(payload.score, session.data.score);
     const level = Math.max(payload.level, session.data.level);
-    session.setProgress(score, level, payload.lives);
+    const lives = Math.min(payload.lives, previousLives);
+    session.setProgress(score, level, lives);
 
     if (level > previousLevel) {
       if (level > team.progress.level) {
@@ -228,12 +230,12 @@ export class GameManager extends EventEmitter {
       );
     }
 
-    if (payload.lives < previousLives && payload.lives > 0) {
-      this.pushEvent("player_life_lost", `${session.data.name} (${team.identity.name}) lost a life — ${payload.lives} remaining`, team.identity.id);
+    if (lives < previousLives && lives > 0) {
+      this.pushEvent("player_life_lost", `${session.data.name} (${team.identity.name}) lost a life — ${lives} remaining`, team.identity.id);
     }
 
     if (payload.gameOver) {
-      this.pushEvent("player_game_over", `${session.data.name}'s spell failed for the last time — final score ${payload.score}`, team.identity.id);
+      this.pushEvent("player_game_over", `${session.data.name}'s spell failed for the last time — final score ${score}`, team.identity.id);
     }
 
     this.emit("playerSelf", playerId, session.selfView());

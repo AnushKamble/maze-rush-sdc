@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { GameEngine, type EngineSnapshot } from "../game/GameEngine";
+import { GameEngine, type EngineSnapshot, type EngineInitialState } from "../game/GameEngine";
 import { cellAt, LEVELS, type Dir } from "../game/mazes";
 import { sfx } from "../game/sfx";
 import type { TeamInfo } from "../socket/useGameSocket";
@@ -19,9 +19,10 @@ interface Props {
   team: TeamInfo | null;
   onProgress: (score: number, level: number, lives: number, gameOver?: boolean) => void;
   serverPhase?: string;
+  initialProgress?: { score: number; level: number; lives: number };
 }
 
-export default function GamePage({ playerName, team, onProgress, serverPhase }: Props) {
+export default function GamePage({ playerName, team, onProgress, serverPhase, initialProgress }: Props) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<GameEngine | null>(null);
@@ -33,7 +34,10 @@ export default function GamePage({ playerName, team, onProgress, serverPhase }: 
   const canvasDims = useRef({ w: 0, h: 0 });
 
   if (!engineRef.current) {
-    engineRef.current = new GameEngine();
+    const initial: EngineInitialState | undefined = initialProgress
+      ? { levelIndex: initialProgress.level - 1, score: initialProgress.score, lives: initialProgress.lives }
+      : undefined;
+    engineRef.current = new GameEngine(undefined, initial);
   }
 
   // ---- orientation gate for the landscape level ----
