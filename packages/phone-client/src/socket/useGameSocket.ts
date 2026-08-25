@@ -25,39 +25,35 @@ export function useGameSocket() {
   const [rehydrating, setRehydrating] = useState(false);
 
   useEffect(() => {
-    let cancelled = false;
-    (async()=>{
-      fetch(`${SERVER_URL}/device`, { credentials: "include" }).catch(() => {});
-      const socket: AppSocket = io(SERVER_URL, { transports: ["websocket", "polling"], withCredentials : true });
-      socketRef.current = socket;
+    const socket: AppSocket = io(SERVER_URL, { transports: ["websocket", "polling"], withCredentials : true });
+    socketRef.current = socket;
 
-      socket.on("connect", () => {
-        setConnected(true);
-        const existingId = playerIdRef.current;
-        if(existingId){
-          setRehydrating(true);
-          socket.emit("player:rehydrate", { playerId: existingId }, (ack) => {
-          if(ack.ok && ack.player){
-            setSelf(ack.player);
-            const savedTeam = sessionStorage.getItem("tmr_teamInfo");
-            if (savedTeam) {
-              setTeam(JSON.parse(savedTeam));
-            }
+    socket.on("connect", () => {
+      setConnected(true);
+      const existingId = playerIdRef.current;
+      if(existingId){
+        setRehydrating(true);
+        socket.emit("player:rehydrate", { playerId: existingId }, (ack) => {
+        if(ack.ok && ack.player){
+          setSelf(ack.player);
+          const savedTeam = sessionStorage.getItem("tmr_teamInfo");
+          if (savedTeam) {
+            setTeam(JSON.parse(savedTeam));
           }
-          else{
-            playerIdRef.current = null;
-            sessionStorage.removeItem("tmr_playerId");
-            sessionStorage.removeItem("tmr_teamInfo");
-            setSelf(null);
-            setTeam(null);
-          }
-          })
         }
-      });
-      socket.on("disconnect", () => setConnected(false));
-      socket.on("player:selfUpdate", (view) => setSelf(view));
-      socket.on("game:stateUpdate", (state) => setGameState(state));
-    })();
+        else{
+          playerIdRef.current = null;
+          sessionStorage.removeItem("tmr_playerId");
+          sessionStorage.removeItem("tmr_teamInfo");
+          setSelf(null);
+          setTeam(null);
+        }
+        })
+      }
+    });
+    socket.on("disconnect", () => setConnected(false));
+    socket.on("player:selfUpdate", (view) => setSelf(view));
+    socket.on("game:stateUpdate", (state) => setGameState(state));
 
     return () => {
       socket.disconnect();
