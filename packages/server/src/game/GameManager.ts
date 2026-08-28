@@ -213,7 +213,7 @@ export class GameManager extends EventEmitter {
 
     const previousLevel = session.data.level;
     const previousLives = session.data.lives;
-    const score = Math.min(payload.score, session.data.score);
+    const score = Math.max(payload.score, session.data.score);
     const level = Math.max(payload.level, session.data.level);
     const lives = Math.min(payload.lives, previousLives);
     session.setProgress(score, level, lives);

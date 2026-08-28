@@ -55,17 +55,9 @@ export function registerPlayerHandlers(socket: AppSocket, gameManager: GameManag
     socket.data.playerId = self.id;
     const maze = gameManager.getPlayerMaze(self.id);
     if (maze) socket.emit("player:mazeAssigned", maze);
-    const identity = gameManager.getTeamIdentity(self.teamId);
     logger.info("player:rehydrate ok", { playerId: self.id });
-    ack({
-      ok: true,
-      player: self,
-      teamId: self.teamId,
-      teamName: identity?.name,
-      teamColor: identity?.color,
-      teamIcon: identity?.icon,
-    });
-   })
+    ack({ ok: true, player: self, teamId: self.teamId });
+  })
 
   socket.on("player:move", (payload) => {
     const playerId = socket.data.playerId as string | undefined;
