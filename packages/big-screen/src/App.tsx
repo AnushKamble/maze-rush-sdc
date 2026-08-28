@@ -43,33 +43,44 @@ export default function App() {
           sfx.click();
           setShowAdmin((v) => !v);
         }}
-        style={{
-          position: "absolute",
-          top: 14,
-          right: 14,
-          zIndex: 10,
-          fontSize: 12,
-          padding: "7px 14px",
-          background: "transparent",
-          border: "1.5px solid var(--gold)",
-          borderRadius: 6,
-          color: "var(--gold)",
-          fontFamily: "var(--font-pixel)",
-          letterSpacing: "0.5px",
-          cursor: "pointer",
-          boxShadow: "0 0 10px rgba(224,182,74,0.15)",
-          transition: "box-shadow 0.2s ease, background 0.2s ease",
-        }}
+        className={showAdmin ? "btn btn-primary" : "btn btn-neutral"}
+        style={
+          showAdmin
+            ? {
+              position: "absolute",
+              top: 14,
+              right: 18,
+              zIndex: 10,
+              width: 270,
+              height: 52,
+              fontSize: 13,
+              letterSpacing: "1px",
+              fontFamily: "'Cinzel', Georgia, serif",
+              fontVariant: "small-caps",
+              fontWeight: 600,
+              background: "#0b1018",
+              color: "#dca53b",
+              border: "1px solid #a87524",
+              borderRadius: 2,
+              clipPath: "polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px))",
+              cursor: "pointer",
+            }
+            : { position: "absolute", top: 14, right: 14, zIndex: 10, fontSize: 12, padding: "7px 14px" }
+        }
         onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = "rgba(224,182,74,0.12)";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 16px rgba(224,182,74,0.35)";
+          if (!showAdmin) {
+            (e.currentTarget as HTMLButtonElement).style.background = "rgba(224,182,74,0.12)";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 16px rgba(224,182,74,0.35)";
+          }
         }}
         onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.background = "transparent";
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = "0 0 10px rgba(224,182,74,0.15)";
+          if (!showAdmin) {
+            (e.currentTarget as HTMLButtonElement).style.background = "";
+            (e.currentTarget as HTMLButtonElement).style.boxShadow = "";
+          }
         }}
       >
-        {showAdmin ? "← Back" : "⚙ Admin"}
+        {showAdmin ? "‹  RETURN TO LOBBY" : "⚙️ Admin"}
 
       </button>
 
